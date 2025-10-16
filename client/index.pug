@@ -1,0 +1,1045 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title ShareCare - Bridging People & Orphanages
+    link(rel="stylesheet" href="style.css")
+  
+  body
+    // ==================== HEADER SECTION START ====================
+    header.header
+      .nav-container
+        a.brand(href="#" onclick="showPage('home')")
+          .logo SC
+          .brand-text
+            h1 ShareCare
+            p Bridging people & orphanages
+
+        nav.nav-menu
+          a.nav-link.active(href="#" onclick="showPage('home')") Home
+          a.nav-link(href="#" onclick="showPage('donate')") Donate
+          a.nav-link(href="#" onclick="showPage('volunteer')") Volunteer
+          a.nav-link(href="#" onclick="showPage('adopt')") Adopt
+          a.nav-link(href="#" onclick="showPage('about')") About
+          a.nav-link(href="#" onclick="showPage('contact')") Contact
+
+        a.cta-button(href="#" onclick="showPage('login')") Login
+
+        button.hamburger(onclick="toggleMobileMenu()")
+          span
+          span
+          span
+
+    .mobile-menu#mobileMenu
+      .mobile-menu-header
+        h2 Menu
+        button.close-menu(onclick="toggleMobileMenu()") &times;
+      ul.mobile-nav-links
+        li
+          a.mobile-nav-link.active(href="#" onclick="showPage('home'); toggleMobileMenu()") Home
+        li
+          a.mobile-nav-link(href="#" onclick="showPage('donate'); toggleMobileMenu()") Donate
+        li
+          a.mobile-nav-link(href="#" onclick="showPage('volunteer'); toggleMobileMenu()") Volunteer
+        li
+          a.mobile-nav-link(href="#" onclick="showPage('adopt'); toggleMobileMenu()") Adopt
+        li
+          a.mobile-nav-link(href="#" onclick="showPage('about'); toggleMobileMenu()") About
+        li
+          a.mobile-nav-link(href="#" onclick="showPage('contact'); toggleMobileMenu()") Contact
+        li
+          a.mobile-nav-link(href="#" onclick="showPage('login'); toggleMobileMenu()") Login
+
+    .overlay#overlay(onclick="toggleMobileMenu()")
+    // ==================== HEADER SECTION END ====================
+
+    // ==================== MAIN CONTENT START ====================
+    main.main-content
+      // ==================== LOGIN/SIGNUP PAGE START ====================
+      #login.page
+        .auth-page
+          .auth-container
+            .auth-header
+              h2 Welcome to ShareCare
+              p Join our community and make a difference
+
+            .auth-tabs
+              button.auth-tab.active(onclick="switchTab('login')") Login
+              button.auth-tab(onclick="switchTab('signup')") Sign Up
+
+            .auth-content
+              // Login Form
+              form#loginForm.auth-form.active(onsubmit="handleLogin(event)")
+                .form-group
+                  label(for="loginEmail") Email Address
+                  .input-group
+                    span.input-icon 📧
+                    input#loginEmail.form-input(type="email" placeholder="Enter your email" required)
+                  .error-message Please enter a valid email address
+
+                .form-group
+                  label(for="loginPassword") Password
+                  .input-group
+                    span.input-icon 🔒
+                    input#loginPassword.form-input(type="password" placeholder="Enter your password" required)
+                    button.password-toggle(type="button" onclick="togglePassword('loginPassword')") 👁️
+                  .error-message Password must be at least 6 characters
+
+                .checkbox-group
+                  input#rememberMe(type="checkbox" name="rememberMe")
+                  label(for="rememberMe") Remember me
+
+                button.auth-button(type="submit") Login
+
+                .forgot-password
+                  a(href="#" onclick="showForgotPassword()") Forgot your password?
+
+                .divider Or continue with
+
+                .social-login
+                  button.social-button(type="button" onclick="loginWithGoogle()")
+                    span.social-icon.google-icon G
+                    | Continue with Google
+                  button.social-button(type="button" onclick="loginWithFacebook()")
+                    span.social-icon.facebook-icon f
+                    | Continue with Facebook
+
+              // Signup Form
+              form#signupForm.auth-form(onsubmit="handleSignup(event)")
+                .user-type-selection
+                  label I want to join as:
+                  .user-type-options
+                    .user-type-option
+                      input#userTypeDonor(type="radio" name="userType" value="donor" checked)
+                      label.user-type-label(for="userTypeDonor")
+                        span.user-type-icon ❤️
+                        span.user-type-text Donor
+                    .user-type-option
+                      input#userTypeVolunteer(type="radio" name="userType" value="volunteer")
+                      label.user-type-label(for="userTypeVolunteer")
+                        span.user-type-icon 🤝
+                        span.user-type-text Volunteer
+                    .user-type-option
+                      input#userTypeOrganization(type="radio" name="userType" value="organization")
+                      label.user-type-label(for="userTypeOrganization")
+                        span.user-type-icon 🏢
+                        span.user-type-text Organization
+
+                .form-row
+                  .form-group
+                    label(for="signupFirstName") First Name
+                    input#signupFirstName.form-input(type="text" placeholder="First name" required)
+                  .form-group
+                    label(for="signupLastName") Last Name
+                    input#signupLastName.form-input(type="text" placeholder="Last name" required)
+
+                .form-group
+                  label(for="signupEmail") Email Address
+                  .input-group
+                    span.input-icon 📧
+                    input#signupEmail.form-input(type="email" placeholder="Enter your email" required)
+                  .error-message Please enter a valid email address
+
+                .form-group
+                  label(for="signupPhone") Phone Number
+                  .input-group
+                    span.input-icon 📱
+                    input#signupPhone.form-input(type="tel" placeholder="+91 98765 43210" required)
+
+                .form-group
+                  label(for="signupPassword") Password
+                  .input-group
+                    span.input-icon 🔒
+                    input#signupPassword.form-input(type="password" placeholder="Create a password" required)
+                    button.password-toggle(type="button" onclick="togglePassword('signupPassword')") 👁️
+                  .error-message Password must be at least 8 characters with numbers and letters
+
+                .form-group
+                  label(for="confirmPassword") Confirm Password
+                  .input-group
+                    span.input-icon 🔒
+                    input#confirmPassword.form-input(type="password" placeholder="Confirm your password" required)
+                    button.password-toggle(type="button" onclick="togglePassword('confirmPassword')") 👁️
+                  .error-message Passwords do not match
+
+                .checkbox-group
+                  input#agreeTerms(type="checkbox" name="agreeTerms" required)
+                  label(for="agreeTerms")
+                    | I agree to the 
+                    a(href="#" style="color: var(--primary-color);") Terms of Service
+                    |  and 
+                    a(href="#" style="color: var(--primary-color);") Privacy Policy
+
+                button.auth-button(type="submit") Create Account
+
+                .divider Or sign up with
+
+                .social-login
+                  button.social-button(type="button" onclick="signupWithGoogle()")
+                    span.social-icon.google-icon G
+                    | Sign up with Google
+                  button.social-button(type="button" onclick="signupWithFacebook()")
+                    span.social-icon.facebook-icon f
+                    | Sign up with Facebook
+      // ==================== LOGIN/SIGNUP PAGE END ====================
+
+      // ==================== ENHANCED HOME PAGE START ====================
+      #home.page.active
+        // Enhanced Hero Section
+        section.hero
+          .hero-content
+            h1 Crowdfunding communities for communities with Trust and Transparency
+            p ShareCare connects donors and volunteers to nearby orphanages and community centers. Create fundraisers, view verified needs, and ensure donations get confirmed.
+            .hero-cta
+              a.btn.btn-primary(href="#" onclick="showPage('donate')") Start Donating
+              a.btn.btn-secondary(href="#" onclick="showPage('volunteer')") Find Volunteer Jobs
+            .trust-indicators
+              .trust-item
+                span.trust-icon 🛡️
+                span 100% Verified Organizations
+              .trust-item
+                span.trust-icon 📊
+                span Real-time Impact Tracking
+              .trust-item
+                span.trust-icon 🔒
+                span Secure Donations
+
+        // Enhanced Statistics Section
+        section.stats-grid
+          .stat-card
+            .stat-icon 🏠
+            h3 24
+            p Verified Orphanages
+          .stat-card
+            .stat-icon 💳
+            h3 87
+            p Secure Payments
+          .stat-card
+            .stat-icon 📈
+            h3 156
+            p Transparent Tracking
+
+        // How It Works Section
+        section.how-it-works
+          .section-header
+            h2.section-title How ShareCare Works
+            p.section-subtitle Simple, transparent, and effective way to make a difference in children's lives
+
+          .steps-grid
+            .step-card
+              .step-number 1
+              .step-icon 🔍
+              h3.step-title Discover
+              p.step-description Browse verified orphanages and their specific needs in your area or nationwide
+
+            .step-card
+              .step-number 2
+              .step-icon ❤️
+              h3.step-title Choose
+              p.step-description Select how you want to help - donate money, volunteer time, or donate goods
+
+            .step-card
+              .step-number 3
+              .step-icon 📊
+              h3.step-title Track Impact
+              p.step-description See real-time updates on how your contribution is making a difference
+
+            .step-card
+              .step-number 4
+              .step-icon 🤝
+              h3.step-title Stay Connected
+              p.step-description Receive updates, stories, and photos from the children you're helping
+
+        // Enhanced Featured Orphanages
+        section.featured-section
+          .section-actions
+            .section-header
+              h2.section-title Featured Orphanages
+              p.section-subtitle Make an immediate impact at these verified organizations
+            a.view-all-btn(href="#" onclick="showPage('donate')") View All
+
+          .card-grid
+            .orphanage-card
+              .orphanage-header
+                .orphanage-icon HC
+                .orphanage-info
+                  h4 Hope Children's Home
+                  p.orphanage-location Banjara Hills, Hyderabad
+              .orphanage-details
+                .detail-row
+                  span.detail-label Contact:
+                  span.detail-value +91 98480 12345
+                .detail-row
+                  span.detail-label Children:
+                  span.detail-value 45 children
+              .needs-tags
+                span.need-tag Food & Nutrition
+                span.need-tag Clothing
+                span.need-tag Medicine
+              .detail-row
+                span.detail-label Funding Goal: ₹50,000
+                span.detail-value ₹32,500 raised (65%)
+              .progress-bar
+                .progress-fill(style="width: 65%")
+              button.donate-btn(onclick="showPage('donate')") Donate Now
+
+            .orphanage-card
+              .orphanage-header
+                .orphanage-icon SO
+                .orphanage-info
+                  h4 Sai Orphanage
+                  p.orphanage-location Secunderabad, Hyderabad
+              .orphanage-details
+                .detail-row
+                  span.detail-label Contact:
+                  span.detail-value +91 90000 67890
+                .detail-row
+                  span.detail-label Children:
+                  span.detail-value 32 children
+              .needs-tags
+                span.need-tag Books
+                span.need-tag Educational Supplies
+                span.need-tag Medicine
+              .detail-row
+                span.detail-label Funding Goal: ₹35,000
+                span.detail-value ₹28,000 raised (80%)
+              .progress-bar
+                .progress-fill(style="width: 80%")
+              button.donate-btn(onclick="showPage('donate')") Donate Now
+
+            .orphanage-card
+              .orphanage-header
+                .orphanage-icon AS
+                .orphanage-info
+                  h4 Anatha Shishu Nivas
+                  p.orphanage-location Ameerpet, Hyderabad
+              .orphanage-details
+                .detail-row
+                  span.detail-label Contact:
+                  span.detail-value +91 99890 45678
+                .detail-row
+                  span.detail-label Children:
+                  span.detail-value 28 children
+              .needs-tags
+                span.need-tag Food
+                span.need-tag Clothing
+                span.need-tag Toys
+              .detail-row
+                span.detail-label Funding Goal: ₹25,000
+                span.detail-value ₹18,750 raised (75%)
+              .progress-bar
+                .progress-fill(style="width: 75%")
+              button.donate-btn(onclick="showPage('donate')") Donate Now
+      // ==================== ENHANCED HOME PAGE END ====================
+
+      // ==================== UPDATED DONATE PAGE START ====================
+      #donate.page
+        h1 Make a Difference Today
+
+        // Donation Hero Section
+        section.donation-hero
+          .donation-hero-content
+            h2 Transform Lives with Your Generosity
+            p Every rupee you donate creates a ripple of hope. Join thousands of compassionate donors who are changing lives, one child at a time.
+            
+            .donation-stats
+              .donation-stat
+                .donation-stat-number ₹15L+
+                .donation-stat-label Raised This Year
+              .donation-stat
+                .donation-stat-number 2,400+
+                .donation-stat-label Happy Donors
+              .donation-stat
+                .donation-stat-number 850+
+                .donation-stat-label Children Helped
+              .donation-stat
+                .donation-stat-number 24
+                .donation-stat-label Partner Orphanages
+
+        // Donation Categories
+        section
+          .section-header
+            h2.section-title Choose Your Impact
+            p.section-subtitle Support the cause closest to your heart
+
+          .donation-categories
+            .donation-category(onclick="openDonatePopup('education')")
+              .donation-category-icon 📚
+              h3.donation-category-title Education & Learning
+              p.donation-category-desc Books, stationery, digital learning tools, and scholarships
+
+            .donation-category(onclick="openDonatePopup('health')")
+              .donation-category-icon 🏥
+              h3.donation-category-title Healthcare & Medicine
+              p.donation-category-desc Medical checkups, medicines, and emergency treatments
+
+            .donation-category(onclick="openDonatePopup('nutrition')")
+              .donation-category-icon 🍽️
+              h3.donation-category-title Food & Nutrition
+              p.donation-category-desc Daily meals, nutritious snacks, and vitamin supplements
+
+            .donation-category(onclick="openDonatePopup('shelter')")
+              .donation-category-icon 🏠
+              h3.donation-category-title Shelter & Clothing
+              p.donation-category-desc Safe accommodation, clothes, blankets, and basic amenities
+
+            .donation-category(onclick="openDonatePopup('activities')")
+              .donation-category-icon 🎨
+              h3.donation-category-title Sports & Recreation
+              p.donation-category-desc Sports equipment, art supplies, and recreational activities
+
+            .donation-category(onclick="openDonatePopup('emergency')")
+              .donation-category-icon 🚨
+              h3.donation-category-title Emergency Support
+              p.donation-category-desc Crisis relief, urgent medical needs, and disaster response
+
+        // Trust Badges
+        section.trust-badges
+          .trust-badge
+            span.trust-badge-icon 🛡️
+            span.trust-badge-text 100% Secure Payments
+          .trust-badge
+            span.trust-badge-icon 📊
+            span.trust-badge-text Complete Transparency
+          .trust-badge
+            span.trust-badge-icon 🏆
+            span.trust-badge-text 80G Tax Benefits
+          .trust-badge
+            span.trust-badge-icon 📱
+            span.trust-badge-text Real-time Impact Tracking
+      // ==================== UPDATED DONATE PAGE END ====================
+
+      // ==================== VOLUNTEER PAGE START ====================
+      #volunteer.page
+        // Enhanced Hero Section
+        section.volunteer-hero
+          .volunteer-hero-content
+            h1 Join Our Community of Changemakers
+            p Make a lasting impact in children's lives through meaningful volunteer work. Connect with verified orphanages and contribute your skills, time, and passion to create positive change.
+
+            .volunteer-stats
+              .volunteer-stat
+                .volunteer-stat-number 450+
+                .volunteer-stat-label Active Volunteers
+              .volunteer-stat
+                .volunteer-stat-number 12,000+
+                .volunteer-stat-label Hours Contributed
+              .volunteer-stat
+                .volunteer-stat-number 850+
+                .volunteer-stat-label Children Impacted
+              .volunteer-stat
+                .volunteer-stat-number 24
+                .volunteer-stat-label Partner Organizations
+
+            .volunteer-cta
+              button.btn.btn-primary(onclick="document.getElementById('volunteerCategories').scrollIntoView({behavior: 'smooth'})") Start Volunteering
+              button.btn.btn-secondary(onclick="document.getElementById('volunteerProcess').scrollIntoView({behavior: 'smooth'})") Learn How It Works
+
+        // Volunteer Categories
+        section#volunteerCategories
+          .section-header
+            h2.section-title Choose Your Impact Area
+            p.section-subtitle Find volunteer opportunities that match your skills and interests
+
+          .volunteer-categories
+            .volunteer-category(onclick="openVolunteerPopup('education')")
+              .volunteer-category-icon 📚
+              h3.volunteer-category-title Education & Tutoring
+              p.volunteer-category-desc Help children with homework, reading, math, and educational activities
+              .volunteer-need 15 volunteers needed
+
+            .volunteer-category(onclick="openVolunteerPopup('healthcare')")
+              .volunteer-category-icon 🏥
+              h3.volunteer-category-title Healthcare Support
+              p.volunteer-category-desc Assist with health checkups, medicine distribution, and wellness programs
+              .volunteer-need 8 volunteers needed
+
+            .volunteer-category(onclick="openVolunteerPopup('recreation')")
+              .volunteer-category-icon 🎨
+              h3.volunteer-category-title Arts & Recreation
+              p.volunteer-category-desc Organize creative activities, sports, games, and entertainment
+              .volunteer-need 12 volunteers needed
+
+            .volunteer-category(onclick="openVolunteerPopup('technical')")
+              .volunteer-category-icon 💻
+              h3.volunteer-category-title Technical Support
+              p.volunteer-category-desc Help with computers, digital learning, website management
+              .volunteer-need 6 volunteers needed
+
+            .volunteer-category(onclick="openVolunteerPopup('outreach')")
+              .volunteer-category-icon 🤝
+              h3.volunteer-category-title Community Outreach
+              p.volunteer-category-desc Event planning, fundraising, social media, and community engagement
+              .volunteer-need 10 volunteers needed
+
+            .volunteer-category(onclick="openVolunteerPopup('administrative')")
+              .volunteer-category-icon 📋
+              h3.volunteer-category-title Administrative Support
+              p.volunteer-category-desc Help with paperwork, data entry, organization, and office tasks
+              .volunteer-need 5 volunteers needed
+
+        // Enhanced Job Listings
+        section.featured-opportunities
+          .section-header
+            h2.section-title Featured Opportunities
+            p.section-subtitle High-priority volunteer positions available now
+
+          .job-list-enhanced
+            .job-card-enhanced
+              .job-header-enhanced
+                .job-icon 📚
+                .job-main-info
+                  h4.job-title-enhanced English Tutor - Weekend Sessions
+                  p.job-organization Hope Children's Home, Banjara Hills
+                .job-badges
+                  span.job-badge.urgent Urgent
+                  span.job-badge.remote On-site
+
+              .job-details-enhanced
+                .job-detail-item
+                  span.detail-label Time Commitment:
+                  span.detail-value 4 hours/week (Saturdays)
+                .job-detail-item
+                  span.detail-label Age Group:
+                  span.detail-value 8-14 years
+                .job-detail-item
+                  span.detail-label Skills Needed:
+                  span.detail-value English proficiency, Patience
+
+              .job-impact
+                span.impact-icon 👥
+                span Help 15 children improve their English skills
+
+              button.apply-btn-enhanced(onclick="applyForJob('english-tutor')") Apply Now
+
+            .job-card-enhanced
+              .job-header-enhanced
+                .job-icon 🎨
+                .job-main-info
+                  h4.job-title-enhanced Art & Craft Coordinator
+                  p.job-organization Sai Orphanage, Secunderabad
+                .job-badges
+                  span.job-badge.flexible Flexible
+                  span.job-badge.hybrid Hybrid
+
+              .job-details-enhanced
+                .job-detail-item
+                  span.detail-label Time Commitment:
+                  span.detail-value 6 hours/week (Your choice)
+                .job-detail-item
+                  span.detail-label Age Group:
+                  span.detail-value 5-12 years
+                .job-detail-item
+                  span.detail-label Skills Needed:
+                  span.detail-value Creativity, Art background
+
+              .job-impact
+                span.impact-icon 🎨
+                span Inspire creativity in 25 children
+
+              button.apply-btn-enhanced(onclick="applyForJob('art-coordinator')") Apply Now
+
+            .job-card-enhanced
+              .job-header-enhanced
+                .job-icon 💻
+                .job-main-info
+                  h4.job-title-enhanced Digital Literacy Teacher
+                  p.job-organization Anatha Shishu Nivas, Ameerpet
+                .job-badges
+                  span.job-badge.popular Popular
+                  span.job-badge.onsite On-site
+
+              .job-details-enhanced
+                .job-detail-item
+                  span.detail-label Time Commitment:
+                  span.detail-value 3 hours/week (Weekends)
+                .job-detail-item
+                  span.detail-label Age Group:
+                  span.detail-value 10-16 years
+                .job-detail-item
+                  span.detail-label Skills Needed:
+                  span.detail-value Computer skills, Teaching ability
+
+              .job-impact
+                span.impact-icon 💡
+                span Empower 20 children with digital skills
+
+              button.apply-btn-enhanced(onclick="applyForJob('digital-literacy')") Apply Now
+
+        // Volunteer Process
+        section#volunteerProcess.volunteer-process
+          .section-header
+            h2.section-title How Volunteering Works
+            p.section-subtitle Simple steps to start making a difference
+
+          .process-steps-grid
+            .process-step-card
+              .process-step-number 1
+              .process-step-icon 📋
+              h3.process-step-title Apply
+              p.process-step-description Choose your area of interest and submit your volunteer application with your skills and availability.
+
+            .process-step-card
+              .process-step-number 2
+              .process-step-icon ✅
+              h3.process-step-title Verification
+              p.process-step-description Complete background verification and attend a brief orientation session (2-3 days).
+
+            .process-step-card
+              .process-step-number 3
+              .process-step-icon 🎓
+              h3.process-step-title Training
+              p.process-step-description Get specialized training for your role and learn about child safety protocols (1 week).
+
+            .process-step-card
+              .process-step-number 4
+              .process-step-icon 🤝
+              h3.process-step-title Start Volunteering
+              p.process-step-description Begin your volunteer journey and start making a real impact in children's lives!
+
+        // Volunteer Testimonials
+        section.volunteer-testimonials
+          .section-header
+            h2.section-title Stories from Our Volunteers
+            p.section-subtitle Real experiences from people making a difference
+
+          .testimonials-grid
+            .testimonial-card
+              .testimonial-header
+                .testimonial-avatar 👩‍🏫
+                .testimonial-info
+                  h4 Priya Sharma
+                  p Education Volunteer
+                  .testimonial-duration 6 months
+              .testimonial-content
+                p "Volunteering at Hope Children's Home has been incredibly rewarding. Seeing the children's faces light up during our reading sessions makes every Saturday worthwhile. I've grown as much as they have!"
+              .testimonial-impact
+                span.impact-metric 📚 Helped 12 children
+                span.impact-metric ⏰ 48 hours contributed
+
+            .testimonial-card
+              .testimonial-header
+                .testimonial-avatar 👨‍💻
+                .testimonial-info
+                  h4 Arjun Patel
+                  p Tech Support Volunteer
+                  .testimonial-duration 1 year
+              .testimonial-content
+                p "Teaching kids computer basics has been amazing. They're so eager to learn! I've helped set up their computer lab and now they're creating their own projects. It's wonderful to see their confidence grow."
+              .testimonial-impact
+                span.impact-metric 💻 Taught 20 children
+                span.impact-metric ⏰ 120 hours contributed
+
+            .testimonial-card
+              .testimonial-header
+                .testimonial-avatar 👩‍🎨
+                .testimonial-info
+                  h4 Meera Reddy
+                  p Arts & Recreation
+                  .testimonial-duration 8 months
+              .testimonial-content
+                p "The creativity these children have is incredible! Our art sessions are full of laughter and imagination. I love how art gives them a way to express themselves and build confidence."
+              .testimonial-impact
+                span.impact-metric 🎨 Inspired 18 children
+                span.impact-metric ⏰ 72 hours contributed
+
+        // Quick Application CTA
+        section.volunteer-cta-section
+          .volunteer-cta-card
+            h2 Ready to Make a Difference?
+            p Join hundreds of volunteers who are already changing lives. Your skills and time can create lasting impact.
+            .cta-buttons
+              button.btn.btn-primary(onclick="document.getElementById('volunteerCategories').scrollIntoView({behavior: 'smooth'})") Choose Your Impact
+              button.btn.btn-secondary(onclick="openGeneralVolunteerPopup()") General Application
+      // ==================== VOLUNTEER PAGE END ====================
+
+      // ==================== ADOPTION PAGE START ====================
+      #adopt.page
+        h1 Adoption Information
+
+        .alert.alert-info
+          strong Important:
+          |  Adoption is a legal process that requires proper documentation and verification. Our counselors will guide you through each step.
+
+        .card
+          h3 Adoption Process
+          ol.process-steps
+            li.process-step
+              h4.step-title Initial Inquiry
+              p.step-description Submit your interest through our adoption inquiry form
+              .step-details
+                ul
+                  li Fill out the basic information form
+                  li Specify your preferences for adoption
+                  li Schedule an initial consultation
+
+            li.process-step
+              h4.step-title Documentation & Verification
+              p.step-description Provide necessary documents and undergo verification process
+              .step-details
+                ul
+                  li Income certificates and employment verification
+                  li Medical fitness certificates
+                  li Character certificates from authorities
+                  li Home inspection by social workers
+
+            li.process-step
+              h4.step-title Counseling & Preparation
+              p.step-description Attend counseling sessions to prepare for adoption
+              .step-details
+                ul
+                  li Pre-adoption counseling sessions
+                  li Child psychology and care workshops
+                  li Legal aspects of adoption
+                  li Post-adoption support planning
+
+            li.process-step
+              h4.step-title Matching & Legal Process
+              p.step-description Child matching and completion of legal formalities
+              .step-details
+                ul
+                  li Child matching based on preferences
+                  li Meeting and bonding period
+                  li Court procedures and legal adoption
+                  li Post-adoption follow-up support
+
+        // Adoption Inquiry Form
+        .card
+          h3 Adoption Inquiry Form
+          form#adoptionForm(onsubmit="submitAdoptionForm(event)")
+            .form-row
+              .form-group
+                label(for="adoptFirstName") First Name *
+                input#adoptFirstName(name="adoptFirstName" type="text" required)
+              .form-group
+                label(for="adoptLastName") Last Name *
+                input#adoptLastName(name="adoptLastName" type="text" required)
+
+            .form-group
+              label(for="adoptEmail") Email Address *
+              input#adoptEmail(name="adoptEmail" type="email" required)
+
+            .form-row
+              .form-group
+                label(for="adoptPhone") Phone Number *
+                input#adoptPhone(name="adoptPhone" type="tel" required)
+              .form-group
+                label(for="adoptCity") City *
+                input#adoptCity(name="adoptCity" type="text" required)
+
+            .form-group
+              label(for="adoptAddress") Full Address *
+              textarea#adoptAddress(name="adoptAddress" rows="3" required)
+
+            .form-group
+              label Adoption Preferences (e.g., age group, special needs):
+              textarea#adoptPreferences(name="adoptPreferences" rows="4" placeholder="Please describe your preferences for adoption")
+
+            .form-group
+              label Household Information:
+              .checkbox-group
+                label
+                  input(type="checkbox" name="adoptHousehold" value="married")
+                  |  Married
+                label
+                  input(type="checkbox" name="adoptHousehold" value="children")
+                  |  Have Children
+                label
+                  input(type="checkbox" name="adoptHousehold" value="pets")
+                  |  Have Pets
+
+            button.btn.btn-primary(type="submit") Submit Adoption Inquiry
+      // ==================== ADOPTION PAGE END ====================
+
+      // ==================== ABOUT PAGE START ====================
+      #about.page
+        h1 About ShareCare
+
+        .card
+          h3 Our Mission
+          p ShareCare is dedicated to bridging the gap between communities and orphanages, fostering support through transparent donations, volunteer engagement, and adoption opportunities. Our goal is to ensure every child in need receives care, education, and love.
+
+        .card
+          h3 Our Story
+          p Founded in 2015, ShareCare began as a small initiative in Hyderabad to support local orphanages. Over the years, we've grown into a trusted platform, connecting thousands of donors and volunteers with verified organizations, making a tangible impact on children's lives.
+
+        .card-grid
+          .card
+            h3 Our Values
+            ul
+              li
+                strong Transparency:
+                |  We ensure every donation is tracked and verified.
+              li
+                strong Community:
+                |  We foster connections between people and causes.
+              li
+                strong Impact:
+                |  We prioritize meaningful, sustainable support for children.
+
+          .card
+            h3 How We Work
+            ul
+              li
+                strong Verification:
+                |  All orphanages are thoroughly vetted
+              li
+                strong Transparency:
+                |  Real-time tracking of donations
+              li
+                strong Support:
+                |  Comprehensive guidance for volunteers and adopters
+      // ==================== ABOUT PAGE END ====================
+
+      // ==================== CONTACT PAGE START ====================
+      #contact.page
+        h1 Contact Us
+
+        .card-grid
+          .card
+            h3 Get in Touch
+            p
+              strong Email:
+              |  support@sharecare.org
+            p
+              strong Phone:
+              |  +91 98765 43210
+            p
+              strong Address:
+              br
+              | 123 Community Center Road
+              br
+              | Hyderabad, Telangana - 500001
+
+          .card
+            h3 Quick Links
+            ul
+              li
+                a(href="#" onclick="showPage('home')") Home
+              li
+                a(href="#" onclick="showPage('donate')") Donate
+              li
+                a(href="#" onclick="showPage('volunteer')") Volunteer
+              li
+                a(href="#" onclick="showPage('adopt')") Adopt
+              li
+                a(href="#" onclick="showPage('about')") About Us
+
+        .card
+          h3 Send us a Message
+          form#contactForm(onsubmit="submitContactForm(event)")
+            .form-row
+              .form-group
+                label(for="contactFirstName") First Name *
+                input#contactFirstName(name="contactFirstName" type="text" required)
+              .form-group
+                label(for="contactLastName") Last Name *
+                input#contactLastName(name="contactLastName" type="text" required)
+
+            .form-group
+              label(for="contactEmail") Email Address *
+              input#contactEmail(name="contactEmail" type="email" required)
+
+            .form-group
+              label(for="contactPhone") Phone Number
+              input#contactPhone(name="contactPhone" type="tel")
+
+            .form-group
+              label(for="contactSubject") Subject *
+              select#contactSubject(name="contactSubject" required)
+                option(value="") Select Subject
+                option(value="general") General Inquiry
+                option(value="donation") Donation Support
+                option(value="volunteer") Volunteer Opportunities
+                option(value="adoption") Adoption Guidance
+                option(value="technical") Technical Support
+
+            .form-group
+              label(for="contactMessage") Message *
+              textarea#contactMessage(name="contactMessage" rows="5" required)
+
+            button.btn.btn-primary(type="submit") Send Message
+      // ==================== CONTACT PAGE END ====================
+    // ==================== MAIN CONTENT END ====================
+
+    // Donation Popup Modal
+    #donatePopup.popup-overlay(onclick="closeDonatePopup()")
+      .popup-content(onclick="event.stopPropagation()")
+        .popup-header
+          h2#popupTitle 🚀 Quick Donate - Make an Impact in Seconds
+          button.popup-close(onclick="closeDonatePopup()") &times;
+        .popup-body
+          p#popupSubtitle Choose your amount, payment method and donate instantly. Every contribution makes a difference!
+          
+          #popupQuickAmounts.quick-amounts
+            .quick-amount(onclick="selectPopupAmount(500)") ₹500
+            .quick-amount(onclick="selectPopupAmount(1000)") ₹1,000
+            .quick-amount(onclick="selectPopupAmount(2500)") ₹2,500
+            .quick-amount(onclick="selectPopupAmount(5000)") ₹5,000
+            .quick-amount(onclick="selectPopupAmount(10000)") ₹10,000
+            .quick-amount(onclick="selectPopupCustom()") Custom
+
+          .custom-amount#popupCustomAmountDiv(style="display: none;")
+            input#popupCustomAmount(type="number" placeholder="Enter amount (₹)" min="100")
+            button.btn.btn-primary(onclick="confirmPopupCustomAmount()") Confirm
+
+          .payment-methods
+            .payment-method.selected(onclick="selectPopupPaymentMethod('upi')")
+              .payment-icon 📱
+              div UPI
+            .payment-method(onclick="selectPopupPaymentMethod('card')")
+              .payment-icon 💳
+              div Cards
+            .payment-method(onclick="selectPopupPaymentMethod('netbanking')")
+              .payment-icon 🏦
+              div Net Banking
+            .payment-method(onclick="selectPopupPaymentMethod('wallet')")
+              .payment-icon 👝
+              div Wallet
+
+          button.donate-now-btn(onclick="proceedToPopupDonate()") 💝 Donate Now - Create Impact
+
+    // Volunteer Application Popup Modal
+    #volunteerPopup.popup-overlay(onclick="closeVolunteerPopup()")
+      .popup-content.volunteer-popup-content(onclick="event.stopPropagation()")
+        .popup-header
+          h2#volunteerPopupTitle 🤝 Volunteer Application
+          button.popup-close(onclick="closeVolunteerPopup()") &times;
+        .popup-body
+          p#volunteerPopupSubtitle Join our team and make a meaningful impact!
+
+          form#volunteerPopupForm.volunteer-popup-form
+            .form-step.active(data-step="1")
+              h3 Personal Information
+              .form-row
+                .form-group
+                  label(for="volFirstName") First Name *
+                  input#volFirstName(type="text" required)
+                .form-group
+                  label(for="volLastName") Last Name *
+                  input#volLastName(type="text" required)
+
+              .form-group
+                label(for="volEmail") Email Address *
+                input#volEmail(type="email" required)
+
+              .form-row
+                .form-group
+                  label(for="volPhone") Phone Number *
+                  input#volPhone(type="tel" required)
+                .form-group
+                  label(for="volAge") Age
+                  input#volAge(type="number" min="16" max="70")
+
+            .form-step(data-step="2")
+              h3 Availability & Preferences
+              .form-group
+                label Preferred Days *
+                .checkbox-group
+                  label
+                    input(type="checkbox" name="volDays" value="monday")
+                    |  Monday
+                  label
+                    input(type="checkbox" name="volDays" value="tuesday")
+                    |  Tuesday
+                  label
+                    input(type="checkbox" name="volDays" value="wednesday")
+                    |  Wednesday
+                  label
+                    input(type="checkbox" name="volDays" value="thursday")
+                    |  Thursday
+                  label
+                    input(type="checkbox" name="volDays" value="friday")
+                    |  Friday
+                  label
+                    input(type="checkbox" name="volDays" value="saturday")
+                    |  Saturday
+                  label
+                    input(type="checkbox" name="volDays" value="sunday")
+                    |  Sunday
+
+              .form-group
+                label(for="volTimeCommitment") Time Commitment *
+                select#volTimeCommitment(required)
+                  option(value="") Select time commitment
+                  option(value="1-2") 1-2 hours per week
+                  option(value="3-5") 3-5 hours per week
+                  option(value="6-10") 6-10 hours per week
+                  option(value="10+") More than 10 hours per week
+
+              .form-group
+                label(for="volExperience") Previous Experience with Children
+                textarea#volExperience(rows="3" placeholder="Describe any relevant experience...")
+
+            .form-step(data-step="3")
+              h3 Skills & Motivation
+              .form-group
+                label(for="volSkills") Special Skills/Qualifications
+                textarea#volSkills(rows="3" placeholder="Any certifications, degrees, or special skills that might be relevant...")
+
+              .form-group
+                label(for="volMotivation") Why do you want to volunteer? *
+                textarea#volMotivation(rows="4" required placeholder="Tell us what motivates you to volunteer...")
+
+              .form-group
+                label Preferred Age Groups
+                .checkbox-group
+                  label
+                    input(type="checkbox" name="volAgeGroups" value="0-5")
+                    |  Toddlers (0-5 years)
+                  label
+                    input(type="checkbox" name="volAgeGroups" value="6-10")
+                    |  Children (6-10 years)
+                  label
+                    input(type="checkbox" name="volAgeGroups" value="11-15")
+                    |  Pre-teens (11-15 years)
+                  label
+                    input(type="checkbox" name="volAgeGroups" value="16+")
+                    |  Teenagers (16+ years)
+
+            .form-navigation
+              button#prevStepBtn(type="button" onclick="previousStep()" style="display: none;") Previous
+              .step-indicator
+                span.step.active
+                span.step
+                span.step
+              button#nextStepBtn(type="button" onclick="nextStep()") Next
+              button#submitBtn(type="submit" style="display: none;") Submit Application
+
+    // ==================== FOOTER SECTION START ====================
+    footer.footer
+      .footer-content
+        .footer-section
+          .brand
+            .logo SC
+            .brand-text
+              h4 ShareCare
+              p Bridging people & orphanages
+          p Making a difference in children's lives through community support and transparent giving.
+
+        .footer-section
+          h4 Quick Links
+          p
+            a(href="#" onclick="showPage('home')") Home
+          p
+            a(href="#" onclick="showPage('donate')") Donate
+          p
+            a(href="#" onclick="showPage('volunteer')") Volunteer
+          p
+            a(href="#" onclick="showPage('adopt')") Adopt
+
+        .footer-section
+          h4 Contact Info
+          p Email: support@sharecare.org
+          p Phone: +91 98765 43210
+          p
+            | Address: 123 Community Center Road, Hyderabad, Telangana - 500001
+
+      .footer-bottom
+        p &copy; 2025 ShareCare Foundation. All rights reserved.
+    // ==================== FOOTER SECTION END ====================
+
+    // ==================== JAVASCRIPT START ====================
+    script(src="script.js")
+    // ==================== JAVASCRIPT END ====================

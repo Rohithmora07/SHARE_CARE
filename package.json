@@ -1,0 +1,18 @@
+{
+  "name": "sharecare-server",
+  "version": "1.0.0",
+  "main": "Server/server.js",
+  "scripts": {
+    "start": "node Server/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.0",
+    "path": "^0.12.7",
+    "pug": "^3.0.3"
+  }
+}

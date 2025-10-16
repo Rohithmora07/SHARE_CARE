@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# Optional: Ignore environment files if you want (but you said you want to track .env)
+# .env
+
+# Optional: Ignore package-lock.json if you want to regenerate it locally
+# package-lock.json
+
+# Ignore editor or IDE settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
