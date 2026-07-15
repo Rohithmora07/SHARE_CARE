@@ -26,6 +26,3 @@ React • Spring Boot • MySQL • ...
 - Tested and refined the application.
 - Collaborated on backend integration.
 
-## Screenshots
-
-## Future Enhancements
